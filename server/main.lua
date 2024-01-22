@@ -108,7 +108,7 @@ RegisterNetEvent('jbb:vehtrack:server:add-tracked-vehicle', function(vNetId, cha
 
         table.insert(tracked[cId], {player=Player.PlayerData.citizenid, vehicle=vNetId, plate=plate, name=vName});
         
-        QBCore.Functions.UseItem(source, Config.Items["veh_tracker_emitter"].name)
+        Player.Functions.RemoveItem(Config.Items["veh_tracker_emitter"].name, 1)
         TriggerClientEvent('QBCore:Notify', src, ('Tracker installed on %s (%s)'):format(vName, plate), 'success')
     else
         TriggerClientEvent('QBCore:Notify', src, 'Vehicle can\'t be tracked', 'error')

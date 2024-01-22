@@ -11,6 +11,5 @@ All is developed for QBCore and won't be translated/adapted for ESX by myself. I
 Feel free to report any bug on the issue tab.
 
 # Known Issues
-* Usable item (tracker) won't remove from inventory
 * Images are not finals
 * Animation are not finals
