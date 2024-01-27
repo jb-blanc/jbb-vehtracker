@@ -25,9 +25,7 @@ local function sendTrackingInfo(player)
         return false
     end
     
-    print(infoStr)
-
-    TriggerClientEvent('QBCore:Notify', src, infoStr, 'success')
+    QBCore.Functions.Notify(src,  infoStr, 'success')
 end
 
 local function isVehicleTracked(vNetId)
@@ -109,9 +107,9 @@ RegisterNetEvent('jbb:vehtrack:server:add-tracked-vehicle', function(vNetId, cha
         table.insert(tracked[cId], {player=Player.PlayerData.citizenid, vehicle=vNetId, plate=plate, name=vName});
         
         Player.Functions.RemoveItem(Config.Items["veh_tracker_emitter"].name, 1)
-        TriggerClientEvent('QBCore:Notify', src, ('Tracker installed on %s (%s)'):format(vName, plate), 'success')
+        QBCore.Functions.Notify(src, ('Tracker installed on %s (%s)'):format(vName, plate), 'success')
     else
-        TriggerClientEvent('QBCore:Notify', src, 'Vehicle can\'t be tracked', 'error')
+        QBCore.Functions.Notify(src, 'Vehicle can\'t be tracked', 'error')
     end
 end)
 
@@ -139,14 +137,14 @@ RegisterNetEvent('jbb:vehtrack:server:remove-tracker', function(vNetId)
         for channel,vehicles in pairs(tracked) do
             for idx,vehicle in ipairs(vehicles) do
                 if vehicle.vehicle == vNetId then
-                    TriggerClientEvent('QBCore:Notify', src, ('Tracker removed from %s (%s)'):format(vehicle.name, vehicle.plate), 'success')
+                    QBCore.Functions.Notify(src, ('Tracker removed from %s (%s)'):format(vehicle.name, vehicle.plate), 'success')
                     table.remove(tracked[channel], idx);
                     return
                 end
             end
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, 'Nothing found', 'error')
+        QBCore.Functions.Notify(src, 'Nothing found', 'error')
     end
 end)
 
@@ -155,7 +153,7 @@ RegisterNetEvent("jbb:vehtrack:server:set-channel", function(chanId)
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
     if not hasReceiver(Player) then 
-        TriggerClientEvent('QBCore:Notify', src, 'You must have a receiver to set a channel', 'error')
+        QBCore.Functions.Notify(src, 'You must have a receiver to set a channel', 'error')
         return 
     end
 
@@ -163,10 +161,10 @@ RegisterNetEvent("jbb:vehtrack:server:set-channel", function(chanId)
     if cId then 
         if cId >= Config.Settings.minChan and cId<= Config.Settings.maxChan then
             registerOnChannel(Player, cId)
-            TriggerClientEvent('QBCore:Notify', src, ('Registered on channel %d'):format(cId), 'success')
+            QBCore.Functions.Notify(src, ('Registered on channel %d'):format(cId), 'success')
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, ('Insert a number between %d and %d (both included)'):format(Config.Settings.minChan,Config.Settings.maxChan), 'error')
+        QBCore.Functions.Notify(src, ('Insert a number between %d and %d (both included)'):format(Config.Settings.minChan,Config.Settings.maxChan), 'error')
     end
 end)
 
@@ -176,7 +174,7 @@ QBCore.Commands.Add('vtinfo', "Get your tracked vehicles infos", {}, false, func
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
     if not hasReceiver(Player) then 
-        TriggerClientEvent('QBCore:Notify', src, 'You must have a receiver to get infos', 'error')
+        QBCore.Functions.Notify(src, 'You must have a receiver to get infos', 'error')
         return 
     end
 
